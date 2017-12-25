@@ -2,16 +2,14 @@ const _ = require('lodash')
 const Promise = require('bluebird')
 const fs = Promise.promisifyAll(require('fs'))
 
+const LINE_MAX_LENGTH = 80
+const SPACE_LENGTH = 1
+
 readInput()
   .then(splitToWords)
   .then(groupByLength)
-  .then(renderOptimalRows)
-  .then(logPagesCount)
+  .then(collectOptimalRows)
   .then(writeOutput)
-
-function readInput() {
-  return fs.readFileAsync('./alastalon_salissa.txt', 'utf8')
-}
 
 function splitToWords(text) {
   return text.split(/\s/)
@@ -24,32 +22,30 @@ function groupByLength(words) {
     .value()
 }
 
-function renderOptimalRows(groupedWords) {
+function collectOptimalRows(groupedWords) {
   const rows = []
-  const lengths = Object.keys(groupedWords).map(Number)
 
   while(Object.keys(groupedWords).length > 0) {
     const words = []
-    let totalLen = 0
+    let lineLength = 0
 
-    while(totalLen < 80) {
-      const word = longestWord(groupedWords, 80 - totalLen)
+    while(lineLength < LINE_MAX_LENGTH) {
+      const word = longestWord(groupedWords, LINE_MAX_LENGTH - lineLength)
       if (!word) {
         break;
       }
-      totalLen += word.length + 1
+      lineLength += word.length + SPACE_LENGTH
       words.push(word)
     }
-
     rows.push(words)
   }
   return rows
 }
 
-function longestWord(groupedWords, maxLen) {
+function longestWord(groupedWords, maxLength) {
   const longest = _(groupedWords)
     .keys()
-    .filter(len => len <= maxLen)
+    .filter(length =>length <= maxLength)
     .last()
   if (!longest) {
     return
@@ -61,9 +57,8 @@ function longestWord(groupedWords, maxLen) {
   return word
 }
 
-function logPagesCount(rows) {
-  console.log(`Result: ${rows.length} rows = ${rows.length / 25} pages`)
-  return rows
+function readInput() {
+  return fs.readFileAsync('./alastalon_salissa.txt', 'utf8')
 }
 
 function writeOutput(rows) {
