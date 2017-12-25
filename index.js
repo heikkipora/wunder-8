@@ -22,15 +22,15 @@ function groupByLength(words) {
     .value()
 }
 
-function collectOptimalRows(groupedWords) {
+function collectOptimalRows(wordsByLength) {
   const rows = []
 
-  while(Object.keys(groupedWords).length > 0) {
+  while(Object.keys(wordsByLength).length > 0) {
     const words = []
     let lineLength = 0
 
     while(lineLength < LINE_MAX_LENGTH) {
-      const word = longestWord(groupedWords, LINE_MAX_LENGTH - lineLength)
+      const word = longestWord(wordsByLength, LINE_MAX_LENGTH - lineLength)
       if (!word) {
         break;
       }
@@ -42,17 +42,21 @@ function collectOptimalRows(groupedWords) {
   return rows
 }
 
-function longestWord(groupedWords, maxLength) {
-  const longest = _(groupedWords)
+function longestWord(wordsByLength, maxLength) {
+  const longestLength = _(wordsByLength)
     .keys()
     .filter(length =>length <= maxLength)
     .last()
-  if (!longest) {
-    return
+
+  if (longestLength) {
+    return takeWord(wordsByLength, longestLength)
   }
-  const word = groupedWords[longest].pop()
-  if (groupedWords[longest].length === 0) {
-    delete groupedWords[longest]
+}
+
+function takeWord(wordsByLength, length) {
+  const word = wordsByLength[length].pop()
+  if (wordsByLength[length].length === 0) {
+    delete wordsByLength[length]
   }
   return word
 }
