@@ -1,15 +1,14 @@
 {
   "name": "wunder-8",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Heikki Pora",
+  "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "lodash": "^4.17.4"
+    "bluebird": "3.5.1",
+    "lodash": "4.17.4"
   }
 }
