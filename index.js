@@ -24,33 +24,38 @@ function groupByLength(words) {
 
 function collectOptimalRows(wordsByLength) {
   const rows = []
-
-  while(Object.keys(wordsByLength).length > 0) {
-    const words = []
-    let lineLength = 0
-
-    while(lineLength < LINE_MAX_LENGTH) {
-      const word = longestWord(wordsByLength, LINE_MAX_LENGTH - lineLength)
-      if (!word) {
-        break;
-      }
-      lineLength += word.length + SPACE_LENGTH
-      words.push(word)
-    }
-    rows.push(words)
+  while(hasWordsLeft(wordsByLength)) {
+    rows.push(collectOptimalRow(wordsByLength))
   }
-  return rows
+  return rows.join('\n')
+}
+
+function hasWordsLeft(wordsByLength) {
+  return Object.keys(wordsByLength).length > 0
+}
+
+function collectOptimalRow(wordsByLength) {
+  let lineLength = 0
+  const words = []
+
+  while(lineLength < LINE_MAX_LENGTH) {
+    const word = longestWord(wordsByLength, LINE_MAX_LENGTH - lineLength)
+    if (!word) {
+      break;
+    }
+    lineLength += word.length + SPACE_LENGTH
+    words.push(word)
+  }
+  return words.join(' ')
 }
 
 function longestWord(wordsByLength, maxLength) {
-  const longestLength = _(wordsByLength)
+  return _(wordsByLength)
     .keys()
-    .filter(length =>length <= maxLength)
+    .filter(length => length <= maxLength)
+    .takeRight(1)
+    .map(longestLength => takeWord(wordsByLength, longestLength))
     .last()
-
-  if (longestLength) {
-    return takeWord(wordsByLength, longestLength)
-  }
 }
 
 function takeWord(wordsByLength, length) {
@@ -65,7 +70,6 @@ function readInput() {
   return fs.readFileAsync('./alastalon_salissa.txt', 'utf8')
 }
 
-function writeOutput(rows) {
-  const text = rows.map(row => row.join(' ')).join('\n')
+function writeOutput(text) {
   return fs.writeFileAsync('./alastalon_salissa_output.txt', text, 'utf8')
 }
