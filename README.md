@@ -8,4 +8,4 @@ A recent node.js installation. Anything over 8.0.0 will do, but the included .nv
 
 ```npm install && npm start```
 
-Reads input from ```./alastalon_salissa.txt```and writes output to ```./alastalon_salissa_output.txt``` (which is already included).
+Reads input from ```./alastalon_salissa.txt```and writes output to ```./alastalon_salissa_output.txt```
