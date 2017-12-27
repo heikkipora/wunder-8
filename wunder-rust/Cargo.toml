@@ -1,0 +1,6 @@
+[package]
+name = "wunder-rust"
+version = "0.1.0"
+authors = ["Heikki Pora <heikki.pora@gmail.com>"]
+
+[dependencies]
