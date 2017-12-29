@@ -1,7 +1,6 @@
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
-use std::io::Error;
 use std::io::prelude::*;
 use std::io::Read;
 
@@ -72,16 +71,13 @@ fn longest_word(words_by_length: &mut BTreeMap<usize, Vec<String>>, max_length: 
         .map(|(_, words)| words.pop().unwrap())
 }
 
-fn load_text(file_name: &str, text: &mut String) -> Result<(), Error> {
-    let text_file = File::open(file_name)?;
+fn load_text(file_name: &str, text: &mut String) {
+    let text_file = File::open(file_name).expect("Failed to open input file");
     let mut reader = BufReader::new(text_file);
-
-    reader.read_to_string(text)?;
-    Ok(())
+    reader.read_to_string(text).expect("Failed to read input file");
 }
 
-fn write_text(file_name: &str, text: &String) -> Result<(), Error> {
-    let mut text_file = File::create(file_name)?;
-    text_file.write_all(text.as_bytes())?;
-    Ok(())
+fn write_text(file_name: &str, text: &String) {
+    let mut text_file = File::create(file_name).expect("Failed to create output file");
+    text_file.write_all(text.as_bytes()).expect("Failed to write output file");
 }
