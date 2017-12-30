@@ -15,7 +15,7 @@ fn main() {
     group_words_by_length(&text, &mut words_by_length);
 
     let text = collect_optimal_rows(&mut words_by_length);
-    write_text("../alastalon_salissa_output.txt", &text);
+    write_text("../alastalon_salissa_rust_output.txt", &text);
 }
 
 fn group_words_by_length(text: &String, words_by_length: &mut BTreeMap<usize, Vec<String>>) {

@@ -67,9 +67,9 @@ function takeWord(wordsByLength, length) {
 }
 
 function readInput() {
-  return fs.readFileAsync('./alastalon_salissa.txt', 'utf8')
+  return fs.readFileAsync('../alastalon_salissa.txt', 'utf8')
 }
 
 function writeOutput(text) {
-  return fs.writeFileAsync('./alastalon_salissa_output.txt', text, 'utf8')
+  return fs.writeFileAsync('../alastalon_salissa_js_output.txt', text, 'utf8')
 }
