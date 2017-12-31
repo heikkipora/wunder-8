@@ -1,5 +1,6 @@
 # Wunderpähkinä vol. 8
 
+An implementation for https://wunder.dog/the-shortest-edition / https://github.com/wunderdogsw/wunderpahkina-vol8
 Ended up doing two versions: Rust and JS as a learning experience. The Rust version is my first-ever Rust program. I'm quite a bit more familiar with JS :-)
 
 Execution times on a late-2013 MBP with SSD and High Sierra:
