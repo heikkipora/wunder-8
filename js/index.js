@@ -50,12 +50,13 @@ function collectOptimalRow(wordsByLength) {
 }
 
 function longestWord(wordsByLength, maxLength) {
-  return _(wordsByLength)
-    .keys()
-    .filter(length => length <= maxLength)
-    .takeRight(1)
-    .map(longestLength => takeWord(wordsByLength, longestLength))
-    .last()
+  const potentialLengths = Object.keys(wordsByLength)
+                                 .filter(length => length <= maxLength)
+
+  const longestLength = _.findLast(potentialLengths, length => length != maxLength -1 && length != maxLength - 2) || _.takeRight(potentialLengths, 1)
+  if (longestLength && longestLength.length > 0) {
+    return takeWord(wordsByLength, longestLength)
+  }
 }
 
 function takeWord(wordsByLength, length) {
